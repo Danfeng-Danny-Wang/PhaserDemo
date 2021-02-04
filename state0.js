@@ -5,15 +5,8 @@ demo.state0.prototype = {
     create: function () {
         game.stage.backgroundColor = "#80ff80";
         console.log("state0");
-        // game.input.keyboard
-        //     .addKey(Phaser.Keyboard.ONE)
-        //     .onDown.add(changeState, null, null, 1);
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
-        // game.input.keyboard
-        //     .addKey(Phaser.Keyboard.TWO)
-        //     .onDown.add(changeState, null, null, 2);
-
-        // addKeyCallback(Phaser.Keyboard.ZERO, changeState, 0);
         addChangeStateEventListeners();
     },
     update: function () {},
