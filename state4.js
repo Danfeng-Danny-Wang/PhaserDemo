@@ -3,7 +3,6 @@ demo.state4.prototype = {
     preload: function () {},
     create: function () {
         game.stage.backgroundColor = "#5ac18e";
-        console.log("state4");
 
         addChangeStateEventListeners();
     },
