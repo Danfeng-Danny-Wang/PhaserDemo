@@ -1,4 +1,9 @@
 demo.state1 = function () {};
+
+var cursors;
+var vel = 500;
+var grass, rocks;
+
 demo.state1.prototype = {
     preload: function () {
         game.load.tilemap(
@@ -9,8 +14,10 @@ demo.state1.prototype = {
         );
         game.load.image("grassTiles", "assets/tilemaps/grassTiles.png");
         game.load.image("rockTiles", "assets/tilemaps/rockTiles.png");
+        game.load.image("adam", "assets/sprites/adam.png");
     },
     create: function () {
+        game.physics.startSystem(Phaser.Physics.ARCADE);
         game.stage.backgroundColor = "#DDDDDD";
 
         addChangeStateEventListeners();
@@ -19,8 +26,39 @@ demo.state1.prototype = {
         map.addTilesetImage("grassTiles");
         map.addTilesetImage("rockTiles");
 
-        var grass = map.createLayer("grass");
-        var rocks = map.createLayer("rocks");
+        grass = map.createLayer("grass");
+        rocks = map.createLayer("rocks");
+
+        map.setCollisionBetween(1, 9, true, "rocks");
+        map.setCollision(11, true, "grass");
+
+        adam = game.add.sprite(200, 200, "adam");
+        adam.scale.setTo(0.17, 0.17);
+        game.physics.enable(adam);
+
+        cursors = game.input.keyboard.createCursorKeys();
     },
-    update: function () {},
+    update: function () {
+        game.physics.arcade.collide(adam, rocks, function () {
+            console.log("hitting rocks!");
+        });
+        game.physics.arcade.collide(adam, grass, function () {
+            console.log("hitting grass!");
+        });
+
+        if (cursors.up.isDown) {
+            adam.body.velocity.y = -vel;
+        } else if (cursors.down.isDown) {
+            adam.body.velocity.y = vel;
+        } else {
+            adam.body.velocity.y = 0;
+        }
+        if (cursors.left.isDown) {
+            adam.body.velocity.x = -vel;
+        } else if (cursors.right.isDown) {
+            adam.body.velocity.x = vel;
+        } else {
+            adam.body.velocity.x = 0;
+        }
+    },
 };
